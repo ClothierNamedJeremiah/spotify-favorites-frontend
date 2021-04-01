@@ -1,0 +1,93 @@
+.settings-container {
+  display: none;
+
+  @media @desktop-snap-point {
+    display: block;
+    height: 0px;
+    overflow: hidden;
+    user-select: none;
+  
+    transition: @transition-accordion;
+  }
+}
+
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 16px;
+
+  & > input[type="radio"] {
+    display: none;
+  }
+
+  & > input[type="radio"]:checked + label {
+    color: green;
+  }
+
+  & > label {
+    cursor: pointer;
+    font-size: 18px;
+    margin: 5px 0 5px 20px;
+
+    transition: @transition-color-hover;
+    &:hover {
+      color: @color-spotify-lime-green !important;
+    }
+  }
+
+  & > label > span {
+    font-size: 16px;
+    font-weight: 300;
+  }
+}
+
+.horizontal-line-wrapper {
+  display: inline-flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.horizontal-line {
+  display: inline-block;
+  height: 1px;
+  width: 90%;
+  background-color: @color-frost-white;
+}
+
+.settings__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  
+  color: @color-frost-white;
+  font-size: 18px;
+
+  & > button {
+    color: inherit;
+    font-size: inherit;
+    padding: 8px 16px;
+    margin: 8px;
+    border-radius: 4px;
+    transition:
+      background-color 0.4s ease,
+      border-color 0.4s ease;
+  }
+
+  & > .primary {
+    background-color: rgb(54, 54, 54);
+    border: 2px solid transparent;    
+
+    &:hover {
+      border-color: #898b8c;
+    }
+  }
+
+  & > .secondary {
+    border: 2px solid rgb(54, 54, 54);
+
+    &:hover {
+      border-color: #898b8c;
+      background-color: rgb(54, 54, 54);
+    }
+  }
+}

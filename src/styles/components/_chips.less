@@ -1,0 +1,20 @@
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25em;
+  margin: 8px 0;
+  
+  @media @mobile-snap-point {
+    display: none;
+  }
+}
+
+.chip {
+  color: @color-frost-white;
+  text-transform: uppercase;
+
+  padding: 4px 12px;
+  border-radius: 25px;
+  background-color: @color-spotify-black;
+}

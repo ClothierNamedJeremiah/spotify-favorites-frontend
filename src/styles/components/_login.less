@@ -1,0 +1,39 @@
+.login__wrapper {
+  display: grid;
+  place-content: center;
+  letter-spacing: 1.4275px;
+
+  margin: 10vh 5% 5% 5%;
+
+  @media only screen and (max-width: 720px) {
+    text-align: center;
+    margin: 10vh 4px 4px 4px;
+  }
+}
+
+.login__title {
+  margin-bottom: 1.5em;
+}
+
+.login__action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login__link {
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 1em;
+  border-radius: 4px;
+
+  background-color: @color-btn-primary;
+  color: @color-frost-white;
+  text-transform: uppercase;
+
+  transition: @transition-background-color;
+
+  &:hover {
+    background-color: @color-btn-primary-hover;
+  }
+}

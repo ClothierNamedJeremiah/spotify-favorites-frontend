@@ -1,0 +1,30 @@
+.mi-external-link {
+  .dimension(18px);
+  display: inline-block;
+  background: url('../../public/external-link-alt-solid.svg') center no-repeat;
+}
+
+.mi-menu-white {
+
+  @media @desktop-snap-point {
+    .dimension(32px);
+    min-height: 32px;
+    min-width: 32px;
+    content: '';
+    background: url('../../public/menu.svg') center no-repeat;
+    filter: invert(100%);
+    cursor: pointer;
+    -webkit-filter: invert(100%);
+  }
+}
+
+/* font awesome override */
+.fa-spotify { 
+  color: @color-spotify-lime-green;
+  font-size: 4em;
+  margin-right: 0.25em;
+
+  @media @desktop-snap-point {
+    font-size: 3em;
+  }
+}

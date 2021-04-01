@@ -1,0 +1,79 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 260px;
+  min-height: 315px;
+  height: auto;
+  
+  margin: 1em 0.5em;
+  padding: 8px;
+  border-radius: 16px;
+
+  color: @color-card-text-primary;
+  box-shadow: @box-shadow;
+  transition: @transition-color-hover;
+
+  background: linear-gradient(
+    to bottom,
+    @color-card-bg-top 0%,
+    @color-card-bg-top calc(315px / 3), 
+    @color-card-bg-bottom calc(315px / 3),
+    @color-card-bg-bottom  100%
+  );
+
+  @media @mobile-snap-point {
+    border-radius: 4px;
+    background-color: @color-card-bg-top;
+  }
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-self: stretch;
+}
+
+.card__rank {
+  font-size: 20px;
+  font-weight: 700;
+  color: @color-card-text-secondary;
+}
+
+.card__img {
+  display: inline-block;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  
+  .dimension(94px, 94px);
+  box-shadow: @box-shadow;
+  margin: 18px 0 4px 0;
+  
+  @media @mobile-snap-point {
+    .dimension(64px);
+    margin: 0;
+  }
+}
+
+.card__popularity {
+  @media @mobile-snap-point {
+    display: none;
+  }
+}
+
+.card__link {
+  display: grid;
+  place-content: center;
+  .dimension(30px);
+  border-radius: 50%;
+  background-color: @color-spotify-black;
+  box-shadow: @box-shadow;
+  
+  @media @mobile-snap-point {
+    background-color: @color-spotify-lime-green;
+  }
+}

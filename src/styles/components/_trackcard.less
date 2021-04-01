@@ -1,0 +1,63 @@
+.card.card__track {
+  @media @mobile-snap-point {
+    display: grid;
+    grid-template-rows: auto 1fr 40px;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      'header header header header'
+      'img details details details'
+      'audio audio audio audio';
+    position: relative;
+    min-height: 175px;
+
+    background: linear-gradient(to bottom, 
+      #2D2D2D 0%, 
+      #2D2D2D calc(100% - 50px),
+      #F6F9FC calc(100% - 50px),
+      #F6F9FC 100%
+    );
+  }
+
+  & .card__img {
+    grid-area: img;
+  }
+}
+
+.card__header.track__header {
+  grid-area: header;
+}
+
+.track__details {
+  grid-area: details;
+  text-align: center;
+  
+  @media @mobile-snap-point {
+    margin: 0 0 0.5em 0.5em;
+    text-align: left;
+    color: @color-frost-white;
+  }
+}
+
+.track__name {
+  grid-area: track;
+  font-weight: 700;
+  font-size: 22px;
+
+  @media @mobile-snap-point {
+    max-height: 60px;
+    text-overflow: ellipsis;
+  }
+}
+
+.track__audio {
+  grid-area: audio;
+  margin-top: auto;
+  height: 40px;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+    border-radius: 25px;
+    border: 2px solid #2684FF; /* same color as react-select */
+  }
+}

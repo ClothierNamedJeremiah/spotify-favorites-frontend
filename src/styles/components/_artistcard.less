@@ -1,0 +1,40 @@
+.card.card__artist {  
+  @media @mobile-snap-point {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    min-height: 80px;
+    background-image: none;
+  }
+}
+
+.card__header.artist__header {
+  @media @mobile-snap-point {
+    flex-direction: column;
+  }
+}
+
+.card__artist-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media @mobile-snap-point {
+    flex-direction: row;
+  }
+}
+
+.card__name {
+  font-weight: 700;
+  letter-spacing: 1.18px;
+  text-align: center;
+  font-size: 26px;
+  padding: 0 1px;
+  overflow: auto;
+
+  @media @mobile-snap-point {
+    margin-left: 14px;
+    color: @color-frost-white;
+    font-size: 22px;
+    text-align: left;
+  }
+}
