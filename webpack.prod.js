@@ -11,6 +11,7 @@ const common = require('./webpack.common.js');
  */
 module.exports = merge(common, {
   mode: 'production',
+  devtool: 'source-map',
   context: path.resolve(__dirname, './src'),
   entry: './index.js', // Where our application starts and where to start bundling our files
 
@@ -40,12 +41,6 @@ module.exports = merge(common, {
       },
     ],
   },
-  // output: {
-  //   filename: 'bundle.js',
-  //   path: path.resolve(__dirname, 'dist'),
-  //   publicPath: '/dist/', // the url to the output directory resolved relative to the HTML page
-  //   clean: true,
-  // },
   plugins: [
     new MiniCssExtractPlugin(),
   ],
