@@ -18,7 +18,7 @@ export default function useSessionStorage(key, initialValue = null) {
         return sessionStorageValue;
       }
       return initialValue;
-    } catch {
+    } catch (error) {
       // If user is in private mode or has storage restriction
       // sessionStorage can throw. JSON.parse and JSON.stringify
       // cat throw, too.
@@ -29,7 +29,7 @@ export default function useSessionStorage(key, initialValue = null) {
   useEffect(() => {
     try {
       sessionStorage.setItem(prefixedKey, state);
-    } catch {
+    } catch (error) {
       // If user is in private mode or has storage restriction
       // sessionStorage can throw. JSON.parse and JSON.stringify
       // cat throw, too.
