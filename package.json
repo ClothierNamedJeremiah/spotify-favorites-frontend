@@ -1,5 +1,5 @@
 {
-  "name": "spotify-dashboard",
+  "name": "spotify-favorites",
   "version": "1.0.0",
   "description": "personalized spotify dashboard",
   "main": "index.js",

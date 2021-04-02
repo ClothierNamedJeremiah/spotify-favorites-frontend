@@ -1,5 +1,7 @@
 import React from 'react';
 
+import constants from '../constants';
+
 const Login = () => (
   <div className="login__wrapper">
     <div className="login__container">
@@ -9,7 +11,7 @@ const Login = () => (
       </div>
       <div className="login__action">
         <p>To continue, log in to Spotify.</p>
-        <a className="login__link" href="https://spotify-favorites-heroku.herokuapp.com/login">Login</a>
+        <a className="login__link" href={constants.url.LOGIN_URL}>Login</a>
       </div>
     </div>
   </div>

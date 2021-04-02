@@ -22,7 +22,7 @@ const ArtistCard = (props) => {
         </a>
       </div>
       <div className="card__artist-details">
-        <span className="card__img" style={{ backgroundImage: `url(${imageURL})` }} />
+        <span className="card__img" style={{ '--bg': `url(${imageURL})` }} />
         <span className="card__name">{name}</span>
         <span className="card__popularity">
           Community Popularity:&nbsp;

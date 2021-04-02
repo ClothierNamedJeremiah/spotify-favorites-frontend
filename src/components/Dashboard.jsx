@@ -51,7 +51,9 @@ const Dashboard = (props) => {
     };
 
     const target = document.getElementById('intersection-target');
-    observer.current = new IntersectionObserver(callback);
+    observer.current = new IntersectionObserver(callback, {
+      rootMargin: '20px 0px 0px 0px',
+    });
     observer.current.observe(target);
 
     return () => {

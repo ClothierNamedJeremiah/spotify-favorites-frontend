@@ -45,6 +45,9 @@
   display: inline-block;
   flex: 0 0 auto;
   border-radius: 50%;
+  background-image:
+    var(--bg),
+    linear-gradient(to top, rgb(249, 249, 249), rgb(226, 226, 226)); 
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -70,10 +73,6 @@
   place-content: center;
   .dimension(30px);
   border-radius: 50%;
-  background-color: @color-spotify-black;
+  background-color: @color-spotify-green;
   box-shadow: @box-shadow;
-  
-  @media @mobile-snap-point {
-    background-color: @color-spotify-lime-green;
-  }
 }

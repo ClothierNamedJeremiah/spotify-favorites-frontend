@@ -12,6 +12,9 @@ module.exports = {
   plugins: [
     new HTMLWebpackPlugin({
       template: path.join(__dirname, 'public/template.html'),
+      favicon: path.join(__dirname, 'public/favicon-32x32.png'),
+      // path: path.resolve(__dirname, 'dist/'),
+      // filename: 'bundle.js',
     }),
     new ESLintPlugin({
       extensions: ['js', 'jsx'],

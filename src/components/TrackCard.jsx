@@ -28,7 +28,7 @@ const TrackCard = (props) => {
           <span className="mi-external-link" />
         </a>
       </div>
-      <span className="card__img" style={{ backgroundImage: `url(${albumImage})` }} />
+      <span className="card__img" style={{ '--bg': `url(${albumImage})` }} />
       <div className="track__details">
         <span className="track__name">{trackName}</span>
         <p>{getArtistText(artists)}</p>

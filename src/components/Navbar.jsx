@@ -17,31 +17,33 @@ const Navbar = (props) => {
 
   useEffect(() => {
     const settingsContainer = document.querySelector('.settings-container');
-    const { scrollHeight } = settingsContainer;
+    if (settingsContainer) {
+      const { scrollHeight } = settingsContainer;
 
-    const eventHandler = () => {
+      const eventHandler = () => {
+        if (isSettingsOpen) {
+          settingsContainer.style.height = 'auto';
+        }
+      };
+
       if (isSettingsOpen) {
-        settingsContainer.style.height = 'auto';
-      }
-    };
-
-    if (isSettingsOpen) {
-      settingsContainer.style.height = `${scrollHeight}px`;
-      settingsContainer.addEventListener('transitionend', eventHandler, { once: true });
-    } else {
-      const temp = settingsContainer.style.transition;
-      settingsContainer.style.transition = '';
-
-      requestAnimationFrame(() => {
         settingsContainer.style.height = `${scrollHeight}px`;
-        settingsContainer.style.transition = temp;
+        settingsContainer.addEventListener('transitionend', eventHandler, { once: true });
+      } else {
+        const temp = settingsContainer.style.transition;
+        settingsContainer.style.transition = '';
 
-        // As soon as the previous style changes have taken effect, have the element transition
-        // to height: 0, so we are not transitioning out of height: 'auto'
         requestAnimationFrame(() => {
-          settingsContainer.style.height = '0px';
+          settingsContainer.style.height = `${scrollHeight}px`;
+          settingsContainer.style.transition = temp;
+
+          // As soon as the previous style changes have taken effect, have the element transition
+          // to height: 0, so we are not transitioning out of height: 'auto'
+          requestAnimationFrame(() => {
+            settingsContainer.style.height = '0px';
+          });
         });
-      });
+      }
     }
   }, [isSettingsOpen]);
 
@@ -75,13 +77,17 @@ const Navbar = (props) => {
           />
         </div>
 
-        <Settings
-          selectedType={selectedType}
-          setSelectedType={setSelectedType}
-          selectedTimeRange={selectedTimeRange}
-          setSelectedTimeRange={setSelectedTimeRange}
-          setIsSettingsOpen={setIsSettingsOpen}
-        />
+        {isSettingsOpen
+          && (
+            <Settings
+              selectedType={selectedType}
+              setSelectedType={setSelectedType}
+              selectedTimeRange={selectedTimeRange}
+              setSelectedTimeRange={setSelectedTimeRange}
+              setIsSettingsOpen={setIsSettingsOpen}
+            />
+          )
+        }
       </nav>
       {isSettingsOpen
         && (
