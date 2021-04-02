@@ -1,6 +1,8 @@
 # Spotify Favorites
 Spotify Favorites is a personalized dashboard that displays your most listened to songs and artists in Spotify.
 
+This web application was built using ReactJS and is currently hosted on Netlify. Access Spotify Favorites: https://spotify-favorites.netlify.app/
+
 
 ## Repository Content
 The following repository contains all the code and configuration files necessary to both deploy the React app to production and run the application locally.
