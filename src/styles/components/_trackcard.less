@@ -11,11 +11,28 @@
     min-height: 175px;
 
     background: linear-gradient(to bottom, 
-      #2D2D2D 0%, 
-      #2D2D2D calc(100% - 50px),
-      #F6F9FC calc(100% - 50px),
-      #F6F9FC 100%
+      @color-card-bg-top 0%, 
+      @color-card-bg-top calc(100% - 50px),
+      @color-frost-white calc(100% - 50px),
+      @color-frost-white 100%
     );
+
+    @supports (-webkit-touch-callout: none) {
+      /* CSS specific to iOS devices */ 
+      background: linear-gradient(to bottom, 
+        @color-card-bg-top 0%, 
+        @color-card-bg-top calc(100% - 50px),
+        @color-btn-primary-hover 100%
+      );
+    }
+
+    &.safari {
+      background: linear-gradient(to bottom, 
+        @color-card-bg-top 0%, 
+        @color-card-bg-top calc(100% - 50px),
+        @color-btn-primary-hover 100%
+      );
+    }
   }
 
   & .card__img {
@@ -50,6 +67,7 @@
 }
 
 .track__audio {
+  grid-area: audio;
   margin-top: auto;
   height: 40px;
   width: 100%;

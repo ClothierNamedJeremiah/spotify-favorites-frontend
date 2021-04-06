@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function getArtistText(artists) {
@@ -19,6 +19,15 @@ const TrackCard = (props) => {
     spotifyURL,
     previewURL,
   } = props;
+
+  useEffect(() => {
+    const isUsingSafari = navigator.userAgent.indexOf('Chrome') === -1;
+    if (isUsingSafari) {
+      document.querySelectorAll('div.card.card__track').forEach((card) => {
+        card.classList.add('safari');
+      });
+    }
+  }, []);
 
   return (
     <div className="card card__track">

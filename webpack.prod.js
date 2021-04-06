@@ -11,7 +11,7 @@ const common = require('./webpack.common.js');
  */
 module.exports = merge(common, {
   mode: 'production',
-  devtool: 'source-map',
+  devtool: false,
   context: path.resolve(__dirname, './src'),
   entry: './index.js', // Where our application starts and where to start bundling our files
 
