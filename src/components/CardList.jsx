@@ -36,8 +36,10 @@ const CardList = (props) => {
   }
 
   return (
-    <div className="card-list">
-      {Cards}
+    <div className="card-list-wrapper">
+      <div className="card-list">
+        {Cards}
+      </div>
     </div>
   );
 };

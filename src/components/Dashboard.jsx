@@ -13,6 +13,10 @@ const selectOptions = [
   { value: 'long_term', label: 'Long term - last several years' },
 ];
 
+function mapValueToLabel(value) {
+  return selectOptions.find((option) => option.value === value);
+}
+
 const Dashboard = (props) => {
   const { accessToken } = props;
 
@@ -75,6 +79,7 @@ const Dashboard = (props) => {
           className="select"
           options={selectOptions}
           defaultValue={selectOptions[1]}
+          value={mapValueToLabel(selectedTimeRange)}
           isSearchable={false}
           onChange={({ value }) => setSelectedTimeRange(value)}
         />
@@ -83,7 +88,6 @@ const Dashboard = (props) => {
         userData={userData}
         type={selectedType}
       />
-      <div id="intersection-target" />
       { offset.current === 50
         && (
           <div className="dashboard__end">
@@ -98,6 +102,7 @@ const Dashboard = (props) => {
           </div>
         )
       }
+      <div id="intersection-target" />
     </>
   );
 };

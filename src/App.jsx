@@ -27,14 +27,14 @@ const App = () => {
 
   if (accessToken) {
     return (
-      <div className="App">
+      <div>
         <Dashboard accessToken={accessToken} />
       </div>
     );
   }
 
   return (
-    <div className="App">
+    <div>
       <Login />
     </div>
   );
