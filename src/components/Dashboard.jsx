@@ -63,7 +63,7 @@ const Dashboard = (props) => {
     return () => {
       observer.current.disconnect();
     };
-  }, [userData]);
+  }, [accessToken, selectedTimeRange, selectedType, userData]);
 
   return (
     <>
