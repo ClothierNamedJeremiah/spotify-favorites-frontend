@@ -9,10 +9,9 @@ import PropTypes from 'prop-types';
  */
 const Settings = (props) => {
   const {
+    dispatch,
     selectedType,
-    setSelectedType,
     selectedTimeRange,
-    setSelectedTimeRange,
     setIsSettingsOpen,
   } = props;
 
@@ -20,8 +19,11 @@ const Settings = (props) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    setSelectedType(formData.get('type'));
-    setSelectedTimeRange(formData.get('time'));
+    dispatch({
+      type: 'UPDATE_SETTINGS',
+      selectedType: formData.get('type'),
+      selectedTimeRange: formData.get('time'),
+    });
     setIsSettingsOpen(false);
   };
 
@@ -94,10 +96,9 @@ const Settings = (props) => {
 };
 
 Settings.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   selectedType: PropTypes.string.isRequired,
-  setSelectedType: PropTypes.func.isRequired,
   selectedTimeRange: PropTypes.string.isRequired,
-  setSelectedTimeRange: PropTypes.func.isRequired,
   setIsSettingsOpen: PropTypes.func.isRequired,
 };
 

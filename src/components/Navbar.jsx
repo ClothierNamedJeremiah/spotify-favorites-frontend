@@ -7,10 +7,9 @@ import Settings from './Settings';
 
 const Navbar = (props) => {
   const {
+    dispatch,
     selectedType,
-    setSelectedType,
     selectedTimeRange,
-    setSelectedTimeRange,
   } = props;
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -56,14 +55,14 @@ const Navbar = (props) => {
           <ul className="nav__tabs fs-small" role="tablist">
             <li
               className={selectedType === 'artists' ? 'nav__tab active' : 'nav__tab'}
-              onClick={() => setSelectedType('artists')}
+              onClick={() => dispatch({ type: 'SET_TYPE', selectedType: 'artists' })}
               role="tab"
             >
               Top Artists
             </li>
             <li
               className={selectedType === 'tracks' ? 'nav__tab active' : 'nav__tab'}
-              onClick={() => setSelectedType('tracks')}
+              onClick={() => dispatch({ type: 'SET_TYPE', selectedType: 'tracks' })}
               role="tab"
             >
               Top Tracks
@@ -80,10 +79,9 @@ const Navbar = (props) => {
         {isSettingsOpen
           && (
             <Settings
+              dispatch={dispatch}
               selectedType={selectedType}
-              setSelectedType={setSelectedType}
               selectedTimeRange={selectedTimeRange}
-              setSelectedTimeRange={setSelectedTimeRange}
               setIsSettingsOpen={setIsSettingsOpen}
             />
           )
@@ -99,10 +97,9 @@ const Navbar = (props) => {
 };
 
 Navbar.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   selectedType: PropTypes.string.isRequired,
-  setSelectedType: PropTypes.func.isRequired,
   selectedTimeRange: PropTypes.string.isRequired,
-  setSelectedTimeRange: PropTypes.func.isRequired,
 };
 
 export default Navbar;

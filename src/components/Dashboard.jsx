@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 
@@ -17,78 +17,111 @@ function mapValueToLabel(value) {
   return selectOptions.find((option) => option.value === value);
 }
 
+function handleScrollToTop() {
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  });
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'SET_TYPE':
+      return {
+        ...state,
+        userData: [],
+        offset: 0,
+        selectedType: action.selectedType,
+      };
+    case 'SET_TIME_RANGE':
+      return {
+        ...state,
+        userData: [],
+        offset: 0,
+        selectedTimeRange: action.selectedTimeRange,
+      };
+    case 'UPDATE_SETTINGS':
+      return {
+        userData: [],
+        offset: 0,
+        selectedType: action.selectedType,
+        selectedTimeRange: action.selectedTimeRange,
+      };
+    case 'ADD':
+      return {
+        ...state,
+        userData: state.userData.concat(action.userData),
+        offset: state.offset + 25,
+      };
+    default:
+      throw new Error();
+  }
+}
+
 const Dashboard = (props) => {
   const { accessToken } = props;
 
-  const [userData, setUserData] = useState([]);
-  const [selectedType, setSelectedType] = useState('tracks');
-  const [selectedTimeRange, setSelectedTimeRange] = useState('medium_term');
+  const [state, dispatch] = useReducer(reducer, {
+    userData: [],
+    offset: 0,
+    selectedType: 'tracks',
+    selectedTimeRange: 'medium_term',
+  });
 
-  const offset = useRef(0);
-  const observer = useRef(null);
-
-  const handleScrollToTop = () => {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  };
-
-  useEffect(() => {
-    offset.current = 0;
-    setUserData([]);
-  }, [selectedType, selectedTimeRange]);
+  const isCurrentlyFetching = useRef(false); // Prevent User from scrolling too fast and breaking UI
 
   useEffect(() => {
     const callback = ([entry]) => {
-      // Only fetch data when we have transitioned into a state of intersection
-      // We don't want to fetch more data if we're scrolling up
-      if (entry.isIntersecting && offset.current < 50) {
-        getUsersTopData(accessToken, selectedType, selectedTimeRange, 10, offset.current)
+      if (entry.isIntersecting && state.offset < 50 && !isCurrentlyFetching.current) {
+        isCurrentlyFetching.current = true;
+        getUsersTopData(accessToken, state.selectedType, state.selectedTimeRange, 25, state.offset)
           .then((data) => {
-            offset.current += 10;
-            const result = userData.concat(data);
-            setUserData(result);
+            dispatch({ type: 'ADD', userData: data });
+          })
+          .finally(() => {
+            setTimeout(() => {
+              isCurrentlyFetching.current = false;
+            }, 250);
           });
       }
     };
 
     const target = document.getElementById('intersection-target');
-    observer.current = new IntersectionObserver(callback, {
-      rootMargin: '20px 0px 0px 0px',
+    const observer = new IntersectionObserver(callback, {
+      rootMargin: '150px 0px 0px 0px',
+      threshold: 0.25,
     });
-    observer.current.observe(target);
+    observer.observe(target);
 
     return () => {
-      observer.current.disconnect();
+      observer.disconnect();
     };
-  }, [accessToken, selectedTimeRange, selectedType, userData]);
+  }, [accessToken, state]);
 
   return (
     <>
       <Navbar
-        selectedType={selectedType}
-        setSelectedType={setSelectedType}
-        selectedTimeRange={selectedTimeRange}
-        setSelectedTimeRange={setSelectedTimeRange}
+        dispatch={dispatch}
+        selectedType={state.selectedType}
+        selectedTimeRange={state.selectedTimeRange}
       />
       <div className="select-wrapper">
-        <h2 className="select-type">Top {selectedType}</h2>
+        <h2 className="select-type">Top {state.selectedType}</h2>
         <Select
           className="select"
           options={selectOptions}
           defaultValue={selectOptions[1]}
-          value={mapValueToLabel(selectedTimeRange)}
+          value={mapValueToLabel(state.selectedTimeRange)}
           isSearchable={false}
-          onChange={({ value }) => setSelectedTimeRange(value)}
+          onChange={({ value }) => dispatch({ type: 'SET_TIME_RANGE', selectedTimeRange: value })}
         />
       </div>
       <CardList
-        userData={userData}
-        type={selectedType}
+        userData={state.userData}
+        type={state.selectedType}
       />
-      { offset.current === 50
+      { state.offset === 50
         && (
           <div className="dashboard__end">
             <div>No more results available.</div>
