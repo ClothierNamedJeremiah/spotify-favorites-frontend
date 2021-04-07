@@ -13,7 +13,7 @@ export default function useSessionStorage(key, initialValue = null) {
   const prefixedKey = `${PREFIX}${key}`;
   const [state, setState] = useState(() => {
     try {
-      const sessionStorageValue = sessionStorage.getItem(key);
+      const sessionStorageValue = sessionStorage.getItem(prefixedKey);
       if (sessionStorageValue !== 'null') {
         return sessionStorageValue;
       }
