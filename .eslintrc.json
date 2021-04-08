@@ -9,11 +9,6 @@
   "parserOptions": {
     "ecmaVersion": 2020
   },
-  // "parser": "@babel/eslint-parser",
-  // "parserOptions": {
-  //   "sourceType": "module",
-  //   "allowImportExportEverywhere": true
-  // },
   "plugins": [
     "jsx-a11y",
     "react",

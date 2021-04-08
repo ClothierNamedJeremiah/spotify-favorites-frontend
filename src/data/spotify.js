@@ -1,4 +1,4 @@
-import { client } from './cache';
+import axiosInstance from './cache';
 
 function getAvailableImage(images) {
   const imageCount = images?.length;
@@ -38,7 +38,7 @@ export default async function getUsersTopData(accessToken, type, time_range = 'm
     offset,
   }).toString();
 
-  const response = await client.get(`/${type}?${queryParams}`, {
+  const response = await axiosInstance.get(`/${type}?${queryParams}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
