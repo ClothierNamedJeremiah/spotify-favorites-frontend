@@ -21,6 +21,22 @@
   }
 }
 
+.loading-indicator {
+  display: flex;
+  justify-content: center;
+  margin-top: 10vh;
+
+  & .MuiCircularProgress-root {
+    height: 120px !important;
+    width: 120px !important;
+  }
+
+  & .MuiCircularProgress-colorPrimary {
+    color: @color-frost-white;
+    opacity: 0.8;
+  }
+}
+
 .dashboard__end {
   display: flex;
   flex-direction: column;
@@ -46,11 +62,4 @@
       background-color: rgba(38, 132, 255, 0.4);
     }
   }
-}
-
-#intersection-target {
-  width: 100%;
-  height: 1px;
-
-  opacity: 0;
 }

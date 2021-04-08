@@ -5,7 +5,7 @@ function getAvailableImage(images) {
   if (imageCount) {
     return images[imageCount - 1].url;
   }
-  return null;
+  return '';
 }
 
 function extractArtistData(data, offset) {

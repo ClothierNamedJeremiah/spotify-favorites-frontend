@@ -1,6 +1,7 @@
-import React, { useEffect, useReducer, useRef } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
+import { CircularProgress } from '@material-ui/core';
 
 import Navbar from './Navbar';
 import CardList from './CardList';
@@ -26,33 +27,31 @@ function handleScrollToTop() {
 }
 
 function reducer(state, action) {
+  const isSameTimeRange = action.selectedTimeRange === state.selectedTimeRange;
+  const isSameType = action.selectedType === state.selectedType;
   switch (action.type) {
     case 'SET_TYPE':
       return {
         ...state,
-        userData: [],
-        offset: 0,
+        userData: isSameType ? state.userData : [],
         selectedType: action.selectedType,
       };
     case 'SET_TIME_RANGE':
       return {
         ...state,
-        userData: [],
-        offset: 0,
+        userData: isSameTimeRange ? state.userData : [],
         selectedTimeRange: action.selectedTimeRange,
       };
     case 'UPDATE_SETTINGS':
       return {
-        userData: [],
-        offset: 0,
+        userData: isSameType && isSameTimeRange ? state.userData : [],
         selectedType: action.selectedType,
         selectedTimeRange: action.selectedTimeRange,
       };
-    case 'ADD':
+    case 'LOAD':
       return {
         ...state,
-        userData: state.userData.concat(action.userData),
-        offset: state.offset + 25,
+        userData: action.userData,
       };
     default:
       throw new Error();
@@ -64,40 +63,23 @@ const Dashboard = (props) => {
 
   const [state, dispatch] = useReducer(reducer, {
     userData: [],
-    offset: 0,
-    selectedType: 'tracks',
+    selectedType: 'artists',
     selectedTimeRange: 'medium_term',
   });
 
-  const isCurrentlyFetching = useRef(false); // Prevent User from scrolling too fast and breaking UI
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const callback = ([entry]) => {
-      if (entry.isIntersecting && state.offset < 50 && !isCurrentlyFetching.current) {
-        isCurrentlyFetching.current = true;
-        getUsersTopData(accessToken, state.selectedType, state.selectedTimeRange, 25, state.offset)
-          .then((data) => {
-            dispatch({ type: 'ADD', userData: data });
-          })
-          .finally(() => {
-            setTimeout(() => {
-              isCurrentlyFetching.current = false;
-            }, 250);
-          });
-      }
-    };
-
-    const target = document.getElementById('intersection-target');
-    const observer = new IntersectionObserver(callback, {
-      rootMargin: '150px 0px 0px 0px',
-      threshold: 0.25,
-    });
-    observer.observe(target);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [accessToken, state]);
+    setLoading(true);
+    console.log('got it');
+    getUsersTopData(accessToken, state.selectedType, state.selectedTimeRange, 50)
+      .then((data) => {
+        dispatch({ type: 'LOAD', userData: data });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [accessToken, state.selectedType, state.selectedTimeRange]);
 
   return (
     <>
@@ -117,11 +99,22 @@ const Dashboard = (props) => {
           onChange={({ value }) => dispatch({ type: 'SET_TIME_RANGE', selectedTimeRange: value })}
         />
       </div>
-      <CardList
-        userData={state.userData}
-        type={state.selectedType}
-      />
-      { state.offset === 50
+      {
+        loading
+          ? (
+            <div className="loading-indicator">
+              <CircularProgress />
+            </div>
+          )
+          : (
+            <CardList
+              userData={state.userData}
+              type={state.selectedType}
+            />
+          )
+      }
+
+      { state.userData.length === 50
         && (
           <div className="dashboard__end">
             <div>No more results available.</div>
@@ -135,7 +128,6 @@ const Dashboard = (props) => {
           </div>
         )
       }
-      <div id="intersection-target" />
     </>
   );
 };
