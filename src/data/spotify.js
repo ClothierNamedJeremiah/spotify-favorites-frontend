@@ -1,11 +1,19 @@
 import { client } from './cache';
 
+function getAvailableImage(images) {
+  const imageCount = images?.length;
+  if (imageCount) {
+    return images[imageCount - 1].url;
+  }
+  return null;
+}
+
 function extractArtistData(data, offset) {
   return data.map((item, i) => ({
     rank: offset + i + 1,
     spotifyURL: item.external_urls.spotify,
     name: item.name,
-    imageURL: item.images[2].url, // TODO: this may cause errors
+    imageURL: getAvailableImage(item.images),
     genres: item.genres.slice(0, 5),
     popularity: item.popularity,
   }));
@@ -14,7 +22,7 @@ function extractArtistData(data, offset) {
 function extractTrackData(data, offset) {
   return data.map((item, i) => ({
     artists: item.artists.map(({ name }) => name),
-    albumImage: item.album.images[2].url,
+    albumImage: getAvailableImage(item.album.images),
     trackName: item.name,
     popularity: item.popularity,
     rank: offset + i + 1,
